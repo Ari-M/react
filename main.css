@@ -1,0 +1,98 @@
+html {
+	background-color: black;
+	margin: 0 auto;
+}
+
+body {
+	background-color: white;
+	margin: 0 auto;
+	width: 100%;
+	min-width: 75%;
+}
+
+html, body {
+	height: 100%;
+}
+
+#header {
+	height: 100px;
+	text-align: center;
+}
+
+#levelhead {
+	display: inline-block;
+	text-align: left;
+	position: relative;
+	right: 20%;
+	border: 2px solid black;
+	padding: 5px;
+}
+
+#levelhead h2 {
+	padding-right: 50px;
+}
+
+#titlehead {
+	display: inline-block;
+	background-color: #8b0000;
+	padding: 0 5% 0 5%;
+	margin: 0 auto;
+	font-size: 20px;
+}
+
+#pointshead {
+	display: inline-block;
+	text-align: left;
+	position: relative;
+	left: 10%;
+	border: 2px solid black;
+	padding: 5px;
+}
+
+#pointshead h2 {
+	padding-right: 50px;
+}
+
+#content {
+	width: 100%;
+	height: 100%;
+	background-color: grey;
+}
+
+#o1Wrapper {
+	text-align: center;
+	width: 100%;
+	z-index: 100;
+}
+
+#opener {
+	background-color: #8b0000;
+	font-size: 15px;
+}
+
+#board {
+	margin: 5% auto;
+	min-width: 75%;
+
+}
+
+.rows {
+	margin: 0.5% auto;
+	width: 60%;
+	height: 100px;
+	text-align: center;
+	background-color: grey;
+}
+
+.cards {
+	display: inline-block;
+	background-color: blue;
+	height: 100%;
+	width: 15%;
+	border: 2px black solid;
+	margin: auto;
+}
+
+#mode-select {
+	margin-top: 20px;
+}

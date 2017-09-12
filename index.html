@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>REACT!</title>
+  	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+	<div id="header">
+		<div id="levelhead" class="head">
+			<h2>Level: <span id="level"></span></h2>
+		</div>
+		<div id="titlehead" class="head">
+		<h1><span class="fun">REACT!</span></h1>
+		</div>
+		<div id="pointshead" class="head">
+			<h2>Points: <span id="points"></span></h2>
+		</div>
+	</div>
+
+	<div id="content" class="standard">
+			<div id="o1Wrapper">
+			<button id="opener" required>Start Game</button>
+			</div>
+		<div id="board">
+			<div id="r1" class="rows">
+				<div id="c1" class="cards"></div>
+				<div id="c2" class="cards"></div>
+				<div id="c3" class="cards"></div>
+				<div id="c4" class="cards"></div>
+				<div id="c5" class="cards"></div>
+			</div>
+			<div id="r2" class="rows">
+				<div id="c6" class="cards"></div>
+				<div id="c7" class="cards"></div>
+				<div id="c8" class="cards"></div>
+				<div id="c9" class="cards"></div>
+				<div id="c10" class="cards"></div>
+			</div>
+			<div id="r3" class="rows">
+				<div id="c11" class="cards"></div>
+				<div id="c12" class="cards"></div>
+				<div id="c13" class="cards"></div>
+				<div id="c14" class="cards"></div>
+				<div id="c15" class="cards"></div>
+			</div>
+			<div id="r4" class="rows">
+				<div id="c16" class="cards"></div>
+				<div id="c17" class="cards"></div>
+				<div id="c18" class="cards"></div>
+				<div id="c19" class="cards"></div>
+				<div id="c20" class="cards"></div>
+			</div>
+			<div id="r5" class="rows">
+				<div id="c21" class="cards"></div>
+				<div id="c22" class="cards"></div>
+				<div id="c23" class="cards"></div>
+				<div id="c24" class="cards"></div>
+				<div id="c25" class="cards"></div>
+			</div>
+		</div>
+	</div>
+	<!--Dialog box instructions -->
+		<div id="dialog" title="Welcome to REACT!">
+  			<p>Hi! You're about to play REACT! What is this game?
+  			How do you win? Well, lets just say it's all about how well your reactions are and how well you follow directions. First, select your player mode, then click the X button.</p>
+  			<form id="numPlayers">
+  				<input type="radio" name="question1" value="1">One player</input>
+  				<input type="radio" name="question1" value="2">Two player</input>
+  				<br>
+  				<button id="mode-select" type=button onclick="mode()">Select</button>
+  			</form> 
+		</div>
+	</div>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
