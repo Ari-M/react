@@ -6,33 +6,28 @@ var instructions = $('#mode-select');
 var dialogBox = $('#dialog');
 
 //Declare Variables// 
+  //Declare Arrays//
 var cardCollection = [];
+// var letters = ["A", "B", "C", "D", "E", "F","G", "H", "I", "J", 
+// "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W" 
+// "X", "Y", "Z"];
+var colors = ["#73C6B6", "#DC7633", "#7D3C98", "##CD6155", 
+"#F4D03F"];
+
+  //Collectors to arrays//
 $(cardAccess).each(function(i) {
   cardCollection.push(cardAccess[i]);
 })
+  //Local JS variables//
 var level = "start"
-
-//Dialog box related//
- $( function displayInstructions() {
-    $( "#dialog" ).dialog({
-      autoOpen: true,
-      show: {
-        effect: "blind",
-        duration: 1000
-      },
-      hide: {
-        effect: "explode",
-        duration: 1000
-      }
-    });
- 
-    $( "#opener" ).on( "click", function() {
-      $( "#dialog" ).dialog( "open" );
-    });
-  } );
 
 //Functions//
   //Timer//
+  var countdown = function(setTime) {
+
+  };
+
+  //Inherent to function levels functions//
 
   //Player Mode to dictate how to run level functions//
 var playerMode = function(playerNum) {
@@ -42,9 +37,10 @@ var playerMode = function(playerNum) {
     levelUp(1);
   }
 }
-  //Level functions to implement more difficult//
-  //variables and level up//
+  /*Level functions to implement more difficult
+    variables and level up*/
 function levelsDefined(playerMode) {
+  
   function practice() {
     console.log("More progress!" + playerMode)
   }
@@ -88,6 +84,9 @@ var levelUp = function(playerMode) {
     level = "three";
     levelsDefined(playerMode);
     levelsDefined.three();
+
+    default:
+    //You Win!
   }
 };
 
@@ -104,4 +103,25 @@ $("#mode-select").click(function displayInstructions() {
   });
   //Insert a reset button below
 
-  //Event handlers for keystrokes
+  //Conditonal event handlers (keys)//
+
+
+//Dialog box related//
+ $( function displayInstructions() {
+    $( "#dialog" ).dialog({
+      autoOpen: true,
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      }
+    });
+ 
+    $( "#opener" ).on( "click", function() {
+      $( "#dialog" ).dialog( "open" );
+    });
+  } );
+

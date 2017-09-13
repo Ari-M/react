@@ -1,0 +1,16 @@
+
+
+practiceRound = {
+	"title" : "Let's try practice round!",
+	"text" : "Once a letter is shown, you have 2 seconds to press it on your keyboard."
+}
+
+roundOne = {
+	"title" : "Easy",
+	"text" : "Nice job! You've ascended to round one. Now you have one second."
+}
+
+roundTwo = {
+	"title" : "Medium",
+	"text" : "two"
+}
