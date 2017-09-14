@@ -2,15 +2,15 @@
 
 practiceRound = {
 	"title" : "Let's try practice round!",
-	"text" : "Once a letter is shown, you have 2 seconds to press it on your keyboard."
+	"text" : "Once a letter is shown, you have 2 seconds to press it on your keyboard. Press the letters on red else you must be dead if you can't win this one."
 }
 
 roundOne = {
 	"title" : "Easy",
-	"text" : "Nice job! You've ascended to round one. Now you have one second."
+	"text" : "Nice job! You've ascended to round one. Now you have one second, it's teal now, deal?."
 }
 
 roundTwo = {
 	"title" : "Medium",
-	"text" : "two"
+	"text" : "Easy peasy, now for round two. Half a second to press the keys, and this time it's yellow."
 }

@@ -7,7 +7,7 @@ body {
 	background-color: white;
 	margin: 0 auto;
 	width: 100%;
-	min-width: 75%;
+	min-width: 650px;
 }
 
 html, body {
@@ -17,16 +17,17 @@ html, body {
 #header {
 	height: 100px;
 	text-align: center;
+	display: block;
 }
 
 #levelhead {
 	display: inline-block;
 	text-align: left;
 	position: relative;
-	right: 20%;
 	border: 2px solid black;
 	padding: 5px;
-}
+	right: 75px;
+	}
 
 #levelhead h2 {
 	padding-right: 50px;
@@ -44,7 +45,7 @@ html, body {
 	display: inline-block;
 	text-align: left;
 	position: relative;
-	left: 10%;
+	left: 75px;
 	border: 2px solid black;
 	padding: 5px;
 }
@@ -75,11 +76,12 @@ html, body {
 }
 
 .rows {
-	margin: 0.5% auto;
+	margin: 10px auto;
 	width: 100%;
 	height: 100px;
 	text-align: center;
 	background-color: grey;
+	max-width: 650px;
 }
 
 .cards {
