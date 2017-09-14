@@ -44,7 +44,9 @@ var pickRandomColor = function (correctColor) {
   console.log(correctColor);
 }
 
-var pickRandomLetter = function (correctColor, )
+var pickRandomLetter = function (correctColor, randomColor) {
+  
+}
 
 var appender = function () {
 
