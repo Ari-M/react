@@ -2,6 +2,7 @@
 console.log("Javascript Running");
 //DOM CONNECTIONS//
 var cardAccess = $('.cards');
+//var cardId = $(cardAccess).attr('id');
 var instructions = $('#mode-select');
 var dialogBox = $('#dialog');
 
@@ -9,10 +10,8 @@ var dialogBox = $('#dialog');
   //Declare Arrays//
 var cardCollection = [];
 var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var pickedLetter = [];
 var colors = ["#73C6B6", "#DC7633", "#7D3C98", "#CD6155", 
 "#F4D03F"];
-var pickedColor = [];
 
   //Collectors to arrays//
 $(cardAccess).each(function(i) {
@@ -20,11 +19,11 @@ $(cardAccess).each(function(i) {
 })
   //Local JS variables//
 var level = "start";
-var conditionalLoop = 0;
+var setTime;
 //Functions//
   //Timer//
-  var countdown = function(setTime) {
-
+  var countdown = function() {
+    setInterval();
   };
 
   //Inherent to function levels functions//
@@ -40,16 +39,29 @@ var pickRandomColor = function (correctColor) {
   var indexNum = Math.floor(Math.random() * colors.length);
   var randomNum = colors[indexNum];
   var randomColor = randomNum.valueOf();
-  console.log(pickedColor);
-  console.log(correctColor);
+  pickRandomLetter(correctColor, randomColor);
 }
 
 var pickRandomLetter = function (correctColor, randomColor) {
-  
+  var indexNum = Math.floor(Math.random() * letters.length);
+  var randomNum = letters[indexNum];
+  var randomLetter = randomNum.valueOf();
+  pickRandomCard(correctColor, randomColor, randomLetter);
 }
 
-var appender = function () {
+var pickRandomCard = function (correctColor, randomColor, randomLetter) {
+  var indexNum = Math.floor(Math.random() * cardCollection.length)
+  var randomNum = cardCollection[indexNum];
+  var randomCard = randomNum;
+  appender(correctColor, randomColor, randomLetter, randomCard)
+}
 
+var appender = function (correctColor, randomColor, randomLetter, randomCard) {
+  console.log(correctColor, randomColor, randomLetter, randomCard)
+  var text = $(randomCard).children("p");
+  text.text(randomLetter);
+  $(randomCard).css('backgroundColor', randomColor);
+  countdown();
 }
 
 
@@ -66,11 +78,11 @@ var playerMode = function(playerNum) {
 function levelsDefined(playerMode) {
   function practice(keysNum) {
     console.log("More progress! " + playerMode)
-    var i = 0;
     console.log(keysNum);
     pickRandomColor ("#CD6155");
   }
   function one () {
+    console.log('this is not a good thing to display')
 
   }
   function two () {
@@ -123,7 +135,7 @@ var levelUp = function(playerMode) {
 };
 
 //Event Handlers
-$("#mode-select").click(function displayInstructions() {
+$("#mode-select").click(function () {
   var grabChoice = $('input[name=question1]:checked', '#numPlayers').val();
   if (grabChoice === "1") {
     playerMode(1)

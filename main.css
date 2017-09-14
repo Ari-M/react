@@ -93,8 +93,11 @@ html, body {
 	margin: auto;
 }
 
-.cards h1 {
-	height: 100%;
+.cards p {
+	display: inline-block;
+	height: 100%
+	width: 100%;
+	font-size: 30px;
 }
 
 #mode-select {
