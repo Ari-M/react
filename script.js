@@ -22,16 +22,23 @@ var level = "start";
 var setTime;
 //Functions//
   //Timer//
-  var countdown = function() {
-    setInterval();
+  var countdown = function(correctColor, randomLetter) {
+    setTimeout(setConditionalHandlers(correctColor, randomLetter), setTime);
+    unappender(correctColor, randomLetter)
   };
 
   //Inherent to function levels functions//
-var setConditionalHandlers = function () {
+var setConditionalHandlers = function (correctColor, randomLetter) {
+  addEventListener("keydown", function check (e) {
+    if (e.target === randomLetter) {
+      points(1);
+    } else {
+    };
+  });
 
-  };
+}
   
-var points = function () {
+var points = function (pointsAdded) {
 
 } 
 
@@ -53,7 +60,7 @@ var pickRandomCard = function (correctColor, randomColor, randomLetter) {
   var indexNum = Math.floor(Math.random() * cardCollection.length)
   var randomNum = cardCollection[indexNum];
   var randomCard = randomNum;
-  appender(correctColor, randomColor, randomLetter, randomCard)
+  appender(correctColor, randomColor, randomLetter, randomCard);
 }
 
 var appender = function (correctColor, randomColor, randomLetter, randomCard) {
@@ -61,9 +68,12 @@ var appender = function (correctColor, randomColor, randomLetter, randomCard) {
   var text = $(randomCard).children("p");
   text.text(randomLetter);
   $(randomCard).css('backgroundColor', randomColor);
-  countdown();
+  countdown(correctColor, randomLetter, randomCard);
 }
 
+var unappender = function() {
+
+}
 
   //Player Mode to dictate how to run level functions//
 var playerMode = function(playerNum) {
@@ -80,6 +90,7 @@ function levelsDefined(playerMode) {
     console.log("More progress! " + playerMode)
     console.log(keysNum);
     pickRandomColor ("#CD6155");
+    setTime = 2000
   }
   function one () {
     console.log('this is not a good thing to display')
