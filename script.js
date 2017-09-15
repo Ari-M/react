@@ -2,9 +2,10 @@
 console.log("Javascript Running");
 //DOM CONNECTIONS//
 var cardAccess = $('.cards');
-//var cardId = $(cardAccess).attr('id');
 var instructions = $('#mode-select');
 var dialogBox = $('#dialog');
+var showLevel = $('#show-level');
+var showPoints = $('#show-points');
 
 //Declare Variables// 
   //Declare Arrays//
@@ -17,27 +18,24 @@ var colors = ["#73C6B6", "#DC7633", "#7D3C98", "#CD6155",
 $(cardAccess).each(function(i) {
   cardCollection.push(cardAccess[i]);
 })
-  //Local JS variables//
+  //Global JS variables//
 var level = "start";
-var setTime;
+var time;
 //Functions//
   //Timer//
-  var countdown = function(correctColor, randomLetter) {
-    setTimeout(setConditionalHandlers(correctColor, randomLetter), setTime);
-    unappender(correctColor, randomLetter)
-  };
+var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
+  setTimeout(function() {
+    unappender(correctColor, randomColor, randomLetter, randomCard);
+  },time);
+  setConditionalHandlers(correctColor, randomColor, randomLetter, randomCard)
+}
 
   //Inherent to function levels functions//
-var setConditionalHandlers = function (correctColor, randomLetter) {
-  addEventListener("keydown", function check (e) {
-    if (e.target === randomLetter) {
-      points(1);
-    } else {
-    };
-  });
+var setConditionalHandlers = function (correctColor, randomLetter, randomCard) {
+  console.log("set conditional handlers running")
 
 }
-  
+
 var points = function (pointsAdded) {
 
 } 
@@ -68,11 +66,14 @@ var appender = function (correctColor, randomColor, randomLetter, randomCard) {
   var text = $(randomCard).children("p");
   text.text(randomLetter);
   $(randomCard).css('backgroundColor', randomColor);
-  countdown(correctColor, randomLetter, randomCard);
+  winPoint(correctColor, randomColor, randomLetter, randomCard);
 }
 
-var unappender = function() {
-
+function unappender(correctColor, randomColor, randomLetter, randomCard) {
+  console.log("this should be two seconds");
+  var text = $(randomCard).children("p");
+  text.text(' ');
+  $(randomCard).css('backgroundColor', 'blue');
 }
 
   //Player Mode to dictate how to run level functions//
@@ -86,14 +87,15 @@ var playerMode = function(playerNum) {
   //Functions that reference other functions with arguments
   //to define the difficulty level
 function levelsDefined(playerMode) {
+
   function practice(keysNum) {
-    console.log("More progress! " + playerMode)
-    console.log(keysNum);
-    pickRandomColor ("#CD6155");
-    setTime = 2000
+      console.log("More progress! " + playerMode)
+      console.log(keysNum);
+      time = 3000;
+      pickRandomColor ("#CD6155");
   }
   function one () {
-    console.log('this is not a good thing to display')
+    console.log("level one passed")
 
   }
   function two () {
