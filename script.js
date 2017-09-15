@@ -2,36 +2,58 @@
 console.log("Javascript Running");
 //DOM CONNECTIONS//
 var cardAccess = $('.cards');
-//var cardId = $(cardAccess).attr('id');
 var instructions = $('#mode-select');
 var dialogBox = $('#dialog');
+var showLevel = $('#show-level');
+var showPoints = $('#show-points');
 
 //Declare Variables// 
   //Declare Arrays//
 var cardCollection = [];
 var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var colors = ["#73C6B6", "#DC7633", "#7D3C98", "#CD6155", 
-"#F4D03F"];
+// var colors = ["#73C6B6", "#DC7633", "#7D3C98", "#CD6155", 
+// "#F4D03F"];
+var colors = ["rgb(155, 89, 182)", "rgb(203, 67, 53)", "rgb(23, 165, 137)", "rgb(241, 196, 15)", "rgb(205, 97, 85)"]
 
-  //Collectors to arrays//
+  //Collector to array//
 $(cardAccess).each(function(i) {
   cardCollection.push(cardAccess[i]);
 })
-  //Local JS variables//
+  //Global JS variables//
 var level = "start";
-var setTime;
+var time;
+var currentColor;
+
 //Functions//
   //Timer//
-  var countdown = function() {
-    setInterval();
-  };
+var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
+  setConditionalHandlers(correctColor, randomColor, randomLetter, randomCard)
+  setTimeout(function() {
+    unappender(correctColor, randomColor, randomLetter, randomCard);
+  },time); 
+}
 
   //Inherent to function levels functions//
-var setConditionalHandlers = function () {
-
-  };
+var setConditionalHandlers = function (correctColor, randomColor, randomLetter, randomCard) {
+  console.log("set conditional handlers running")
+  var currentColor = $(randomCard).css('backgroundColor');
   
-var points = function () {
+  console.log(currentColor);
+  console.log(randomColor);
+  $(document).keydown(function (event) {
+    if (currentColor === randomColor && event.key === randomLetter){
+      //if (currentColor === correctColor) {
+        console.log("This works" + event.key)
+      //}
+    } else {
+        console.log("If conditional failed with " + event.key);
+    }
+  })
+
+
+}
+
+var points = function (pointsAdded) {
 
 } 
 
@@ -53,7 +75,7 @@ var pickRandomCard = function (correctColor, randomColor, randomLetter) {
   var indexNum = Math.floor(Math.random() * cardCollection.length)
   var randomNum = cardCollection[indexNum];
   var randomCard = randomNum;
-  appender(correctColor, randomColor, randomLetter, randomCard)
+  appender(correctColor, randomColor, randomLetter, randomCard);
 }
 
 var appender = function (correctColor, randomColor, randomLetter, randomCard) {
@@ -61,28 +83,29 @@ var appender = function (correctColor, randomColor, randomLetter, randomCard) {
   var text = $(randomCard).children("p");
   text.text(randomLetter);
   $(randomCard).css('backgroundColor', randomColor);
-  countdown();
+  winPoint(correctColor, randomColor, randomLetter, randomCard);
 }
 
-
-  //Player Mode to dictate how to run level functions//
-var playerMode = function(playerNum) {
-  if (playerNum === 2) {
-    levelUp(2);
-  } else {
-    levelUp(1);
-  }
+function unappender(correctColor, randomColor, randomLetter, randomCard) {
+  console.log("this should be two seconds");
+  var text = $(randomCard).children("p");
+  text.text(' ');
+  $(randomCard).css('backgroundColor', 'blue');
+  time = 0;
 }
+
   //Functions that reference other functions with arguments
   //to define the difficulty level
 function levelsDefined(playerMode) {
+
   function practice(keysNum) {
-    console.log("More progress! " + playerMode)
-    console.log(keysNum);
-    pickRandomColor ("#CD6155");
+      console.log("More progress! " + playerMode)
+      console.log(keysNum);
+      time = 3000;
+      pickRandomColor("rgb(155, 89, 182");
   }
   function one () {
-    console.log('this is not a good thing to display')
+    console.log("level one passed")
 
   }
   function two () {
@@ -97,6 +120,15 @@ function levelsDefined(playerMode) {
   levelsDefined.one = one;
   levelsDefined.two = two;
   levelsDefined.three = three;
+}
+
+  //Player Mode to dictate how to run level functions//
+var playerMode = function(playerNum) {
+  if (playerNum === 2) {
+    levelUp(2);
+  } else {
+    levelUp(1);
+  }
 }
 
 //LEVEL UP//
