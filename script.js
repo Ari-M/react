@@ -20,43 +20,53 @@ $(cardAccess).each(function(i) {
   cardCollection.push(cardAccess[i]);
 })
   //Global JS variables//
+var numPlayers;
+var turn = true
 var level = "start";
 var time;
 var currentColor;
-
+var playerOneScore = 0;
+var playerTwoScore = 0;
 //Functions//
   //Timer//
 var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
-  var cond1 = setConditionalHanders(correctColor, randomColor, randomLetter, randomCard)
+  setConditionalHanders(correctColor, randomColor, randomLetter, randomCard)
   setTimeout(function() {
     unappender(correctColor, randomColor, randomLetter, randomCard);
-    var cond2 = setConditionalHanders(correctColor, randomColor, randomLetter, randomCard);
-  },time); 
+  }, time); 
 
 }
 
   //Inherent to function levels functions//
+  //work on this more...//
 var setConditionalHanders = function (correctColor, randomColor, randomLetter, randomCard) {
-  console.log("set conditional handlers running")
-  console.log(currentColor);
+  console.log("set conditional handlers running");
   console.log(randomColor);
   $(document).keydown(function (event) {
     var currentColor = $(randomCard).css('backgroundColor');
     if (currentColor === randomColor && event.key === randomLetter){
-        console.log("This works" + event.key)
+        console.log("This works" + event.key);
         points(1);
-        return null;
-      //}
     } else {
-        console.log("If conditional failed with " + event.key);
-        return null;
+        points(0)
     }
   })
 }
 
 var points = function (pointsAdded) {
-
-} 
+  if (numPlayers === 1) {
+  playerOneScore = playerOneScore + pointsAdded;
+  $('#show-points').text(playerOneScore);
+  } else {
+    if (turn === true) {
+      playerOneScore = playerOneScore + pointsAdded;
+      $('#show-points').text(playerOneScore);
+    } else {
+      playerTwoScore = playerTwoScore + pointsAdded;
+      $('#show-points').text(playerTwoScore);
+    }
+  }
+}
 
 var pickRandomColor = function (correctColor) {
   var indexNum = Math.floor(Math.random() * colors.length);
@@ -93,7 +103,6 @@ function unappender(correctColor, randomColor, randomLetter, randomCard) {
   var text = $(randomCard).children("p");
   text.text(' ');
   $(randomCard).css('backgroundColor', 'blue');
-  time = 0;
 }
 
   //Functions that reference other functions with arguments
@@ -101,6 +110,7 @@ function unappender(correctColor, randomColor, randomLetter, randomCard) {
 function levelsDefined(playerMode) {
 
   function practice(keysNum) {
+      $('#show-level').text('P');
       console.log("More progress! " + playerMode)
       console.log(keysNum);
       time = 3000;
@@ -108,13 +118,14 @@ function levelsDefined(playerMode) {
   }
   function one () {
     console.log("level one passed")
+    $('#show-level').text('1');
 
   }
   function two () {
-
+    $('#show-level').text('2');
   }
   function three () {
-
+    $('#show-level').text('3');
   }
   //Define functions within this function as properties
   //Function-ception//
@@ -127,8 +138,11 @@ function levelsDefined(playerMode) {
   //Player Mode to dictate how to run level functions//
 var playerMode = function(playerNum) {
   if (playerNum === 2) {
+    numPlayers = 2
+    turn = true;
     levelUp(2);
   } else {
+    numPlayers = 1;
     levelUp(1);
   }
 }
@@ -166,7 +180,7 @@ var levelUp = function(playerMode) {
     case "three":
     //You Win!
   }
-};
+}
 
 //Event Handlers
 $("#mode-select").click(function () {
@@ -178,7 +192,7 @@ $("#mode-select").click(function () {
     } else {
       alert("You must choose a mode.");
     }
-  });
+});
   //Insert a reset button below
 
 //Dialog box related//
@@ -201,22 +215,22 @@ $("#mode-select").click(function () {
   } );
 
  //seperate dialog
-  $( function instructions() {
-    $( "#dialog" ).dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 1000
-      },
-      hide: {
-        effect: "explode",
-        duration: 1000
-      }
-    });
+  // $( function instructions() {
+  //   $( "#dialog" ).dialog({
+  //     autoOpen: false,
+  //     show: {
+  //       effect: "blind",
+  //       duration: 1000
+  //     },
+  //     hide: {
+  //       effect: "explode",
+  //       duration: 1000
+  //     }
+  //   });
  
-    $( "#opener" ).on( "click", function() {
-      $( "#dialog" ).dialog( "open" );
-    });
-  } );
+  //   $( "#opener" ).on( "click", function() {
+  //     $( "#dialog" ).dialog( "open" );
+  //   });
+  // } );
 
 
