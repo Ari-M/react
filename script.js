@@ -11,29 +11,47 @@ var showPoints = $('#show-points');
   //Declare Arrays//
 var cardCollection = [];
 var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var colors = ["#73C6B6", "#DC7633", "#7D3C98", "#CD6155", 
-"#F4D03F"];
+// var colors = ["#73C6B6", "#DC7633", "#7D3C98", "#CD6155", 
+// "#F4D03F"];
+var colors = ["rgb(155, 89, 182)", "rgb(203, 67, 53)", "rgb(23, 165, 137)", "rgb(241, 196, 15)", "rgb(205, 97, 85)"]
 
-  //Collectors to arrays//
+  //Collector to array//
 $(cardAccess).each(function(i) {
   cardCollection.push(cardAccess[i]);
 })
   //Global JS variables//
 var level = "start";
 var time;
+var currentColor;
+
 //Functions//
   //Timer//
 var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
+  var cond1 = setConditionalHanders(correctColor, randomColor, randomLetter, randomCard)
   setTimeout(function() {
     unappender(correctColor, randomColor, randomLetter, randomCard);
-  },time);
-  setConditionalHandlers(correctColor, randomColor, randomLetter, randomCard)
+    var cond2 = setConditionalHanders(correctColor, randomColor, randomLetter, randomCard);
+  },time); 
+
 }
 
   //Inherent to function levels functions//
-var setConditionalHandlers = function (correctColor, randomLetter, randomCard) {
+var setConditionalHanders = function (correctColor, randomColor, randomLetter, randomCard) {
   console.log("set conditional handlers running")
-
+  console.log(currentColor);
+  console.log(randomColor);
+  $(document).keydown(function (event) {
+    var currentColor = $(randomCard).css('backgroundColor');
+    if (currentColor === randomColor && event.key === randomLetter){
+        console.log("This works" + event.key)
+        points(1);
+        return null;
+      //}
+    } else {
+        console.log("If conditional failed with " + event.key);
+        return null;
+    }
+  })
 }
 
 var points = function (pointsAdded) {
@@ -71,19 +89,13 @@ var appender = function (correctColor, randomColor, randomLetter, randomCard) {
 
 function unappender(correctColor, randomColor, randomLetter, randomCard) {
   console.log("this should be two seconds");
+  time = 0;
   var text = $(randomCard).children("p");
   text.text(' ');
   $(randomCard).css('backgroundColor', 'blue');
+  time = 0;
 }
 
-  //Player Mode to dictate how to run level functions//
-var playerMode = function(playerNum) {
-  if (playerNum === 2) {
-    levelUp(2);
-  } else {
-    levelUp(1);
-  }
-}
   //Functions that reference other functions with arguments
   //to define the difficulty level
 function levelsDefined(playerMode) {
@@ -92,7 +104,7 @@ function levelsDefined(playerMode) {
       console.log("More progress! " + playerMode)
       console.log(keysNum);
       time = 3000;
-      pickRandomColor ("#CD6155");
+      pickRandomColor("rgb(155, 89, 182");
   }
   function one () {
     console.log("level one passed")
@@ -110,6 +122,15 @@ function levelsDefined(playerMode) {
   levelsDefined.one = one;
   levelsDefined.two = two;
   levelsDefined.three = three;
+}
+
+  //Player Mode to dictate how to run level functions//
+var playerMode = function(playerNum) {
+  if (playerNum === 2) {
+    levelUp(2);
+  } else {
+    levelUp(1);
+  }
 }
 
 //LEVEL UP//
