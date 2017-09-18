@@ -58,6 +58,7 @@ html, body {
 	width: 100%;
 	height: 100%;
 	background-color: grey;
+	padding-bottom: %;
 }
 
 #o1Wrapper {
@@ -66,7 +67,23 @@ html, body {
 	z-index: 100;
 }
 
+.instructions {
+	text-align: center;
+	background: white;
+	padding: 10px;
+}
+
 #opener {
+	background-color: #8b0000;
+	font-size: 15px;
+}
+
+#leveler {
+	background-color: #8b0000;
+	font-size: 15px;
+}
+
+#switch {
 	background-color: #8b0000;
 	font-size: 15px;
 }
