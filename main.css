@@ -66,7 +66,7 @@ html, body {
 	z-index: 100;
 }
 
-#opener {
+.buttons {
 	background-color: #8b0000;
 	font-size: 15px;
 }

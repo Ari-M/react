@@ -6,13 +6,12 @@ var instructions = $('#mode-select');
 var dialogBox = $('#dialog');
 var showLevel = $('#show-level');
 var showPoints = $('#show-points');
+var showTurnDisplay = $('#titleHead');
 
 //Declare Variables// 
   //Declare Arrays//
 var cardCollection = [];
 var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-// var colors = ["#73C6B6", "#DC7633", "#7D3C98", "#CD6155", 
-// "#F4D03F"];
 var colors = ["rgb(155, 89, 182)", "rgb(203, 67, 53)", "rgb(23, 165, 137)", "rgb(241, 196, 15)", "rgb(205, 97, 85)"]
 
   //Collector to array//
@@ -20,42 +19,53 @@ $(cardAccess).each(function(i) {
   cardCollection.push(cardAccess[i]);
 })
   //Global JS variables//
+var numPlayers;
+var turn = true
 var level = "start";
 var time;
 var currentColor;
-
+var playerOneScore = 0;
+var playerTwoScore = 0;
 //Functions//
   //Timer//
 var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
-  setConditionalHandlers(correctColor, randomColor, randomLetter, randomCard)
+  setConditionalHanders(correctColor, randomColor, randomLetter, randomCard)
   setTimeout(function() {
     unappender(correctColor, randomColor, randomLetter, randomCard);
-  },time); 
+  }, time); 
+
 }
 
   //Inherent to function levels functions//
-var setConditionalHandlers = function (correctColor, randomColor, randomLetter, randomCard) {
-  console.log("set conditional handlers running")
-  var currentColor = $(randomCard).css('backgroundColor');
-  
-  console.log(currentColor);
+  //work on this more...//
+var setConditionalHanders = function (correctColor, randomColor, randomLetter, randomCard) {
+  console.log("set conditional handlers running");
   console.log(randomColor);
   $(document).keydown(function (event) {
+    var currentColor = $(randomCard).css('backgroundColor');
     if (currentColor === randomColor && event.key === randomLetter){
-      //if (currentColor === correctColor) {
-        console.log("This works" + event.key)
-      //}
+        console.log("This works" + event.key);
+        points(1);
     } else {
-        console.log("If conditional failed with " + event.key);
+        points(0)
     }
   })
-
-
 }
 
 var points = function (pointsAdded) {
-
-} 
+  if (numPlayers === 1) {
+  playerOneScore = playerOneScore + pointsAdded;
+  $('#show-points').text(playerOneScore);
+  } else {
+    if (turn === true) {
+      playerOneScore = playerOneScore + pointsAdded;
+      $('#show-points').text(playerOneScore);
+    } else {
+      playerTwoScore = playerTwoScore + pointsAdded;
+      $('#show-points').text(playerTwoScore);
+    }
+  }
+}
 
 var pickRandomColor = function (correctColor) {
   var indexNum = Math.floor(Math.random() * colors.length);
@@ -88,31 +98,83 @@ var appender = function (correctColor, randomColor, randomLetter, randomCard) {
 
 function unappender(correctColor, randomColor, randomLetter, randomCard) {
   console.log("this should be two seconds");
+  time = 0;
   var text = $(randomCard).children("p");
   text.text(' ');
   $(randomCard).css('backgroundColor', 'blue');
-  time = 0;
+  //twoPlayer = numPlayers === 2 ? null : switcher();
+}
+
+var switcher = function () {
+  if (numPlayers === 2) {
+    if (turn === true) {
+      $(showTurnDisplay).css("background-color", "green");
+      turn = false;
+      levelUp();
+    } else {
+      $(showTurnDisplay).css("background-color", "#8b0000");
+      turn = true;
+      levelUp();
+    }
+  }
 }
 
   //Functions that reference other functions with arguments
   //to define the difficulty level
-function levelsDefined(playerMode) {
+function levelsDefined() { 
 
-  function practice(keysNum) {
-      console.log("More progress! " + playerMode)
-      console.log(keysNum);
+
+  function practice (keysNum) {
+    var i = 0;
+    var repeat = setInterval (function () {
+      $('#show-level').text('P');
       time = 3000;
       pickRandomColor("rgb(155, 89, 182");
+      i++;
+      if (i === keysNum) {
+        clearInterval(repeat);
+        switcher();
+      };
+    }, 3000);
   }
-  function one () {
-    console.log("level one passed")
+  
+  function one (keysNum) {
+    var i = 0;
+    var repeat = setInterval (function () {
+      $('#show-level').text('1');
+      time = 2000;
+      pickRandomColor("rgb(155, 89, 182");
+      i++;
+      if (i === keysNum) {
+        clearInterval(repeat);
 
+      };
+    }, 2000);
   }
-  function two () {
 
+  function two (keysNum) {
+    var i = 0;
+    var repeat = setInterval (function () {
+      $('#show-level').text('2');
+      time = 1000;
+      pickRandomColor("rgb(155, 89, 182");
+      i++;
+      if (i === keysNum) {
+        clearInterval(repeat);
+      };
+    }, 1000);
   }
-  function three () {
-
+  function three (keysNum) {
+    var i = 0;
+    var repeat = setInterval (function () {
+      $('#show-level').text('3');
+      time = 850;
+      pickRandomColor("rgb(155, 89, 182");
+      i++;
+      if (i === keysNum) {
+        clearInterval(repeat);
+      };
+    }, 850);
   }
   //Define functions within this function as properties
   //Function-ception//
@@ -125,46 +187,83 @@ function levelsDefined(playerMode) {
   //Player Mode to dictate how to run level functions//
 var playerMode = function(playerNum) {
   if (playerNum === 2) {
-    levelUp(2);
+    numPlayers = 2
+    turn = true;
   } else {
-    levelUp(1);
+    numPlayers = 1;
   }
 }
 
 //LEVEL UP//
-var levelUp = function(playerMode) {
+var levelUp = function() {
   switch (level) {
     case "start":
-    level = "practice";
-    //dialog bog "practice level"
-    levelsDefined(playerMode);
+    //dialog box "practice level"
+    if (numPlayers === 1) {
+      level = "practice"
+      levelsDefined();
+      levelsDefined.practice(2)
+    } else {
+      if (turn === false) {
+        level = "practice";
+      } else {
+    levelsDefined();
     levelsDefined.practice(2);
+      }
+    };
     break;
 
     case "practice":
-    level = "one";
     //dialog box "easy"
-    levelsDefined(playerMode);
-    levelsDefined.one(6);
+    if (numPlayers === 1) {
+      level = "one"
+      levelsDefined();
+      levelsDefined.one(10);
+    } else {
+      if (turn === false) {
+        level = "one";
+      } else {
+    levelsDefined();
+    levelsDefined.one(10);
+      }
+    };
     break;
 
     case "one":
     level = "two";
     //dialog box "medium"
-    levelsDefined(playerMode);
-    levelsDefined.two(6);
+    if (numPlayers === 1) {
+      level = "two"
+      levelsDefined();
+      levelsDefined.two(10);
+    } else {
+      if (turn === false) {
+        level = "two";
+      } else {
+    levelsDefined();
+    levelsDefined.two(10);
+      }
+    };
     break;
 
     case "two":
-    level = "three";
     //dialog box "hard"
-    levelsDefined(playerMode);
-    levelsDefined.three(4);
-
+   if (numPlayers === 1) {
+      level = "three"
+      levelsDefined();
+      levelsDefined.three(8);
+    } else {
+      if (turn === false) {
+        level = "three";
+      } else {
+    levelsDefined();
+    levelsDefined.three(8);
+      }
+    };
     case "three":
-    //You Win!
+    
   }
-};
+}
 
 //Event Handlers
 $("#mode-select").click(function () {
@@ -176,7 +275,7 @@ $("#mode-select").click(function () {
     } else {
       alert("You must choose a mode.");
     }
-  });
+});
   //Insert a reset button below
 
 //Dialog box related//
@@ -197,24 +296,15 @@ $("#mode-select").click(function () {
       $( "#dialog" ).dialog( "open" );
     });
   } );
-
- //seperate dialog
-  $( function instructions() {
-    $( "#dialog" ).dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 1000
-      },
-      hide: {
-        effect: "explode",
-        duration: 1000
-      }
-    });
  
-    $( "#opener" ).on( "click", function() {
-      $( "#dialog" ).dialog( "open" );
-    });
-  } );
+ $('#leveler').on('click', function () {
+  levelUp();
+ })
+
+ $('#switch').on('click', function () {
+  switcher();
+ })
+
+
 
 
