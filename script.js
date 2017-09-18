@@ -29,7 +29,7 @@ var playerOneScore = 0;
 var playerTwoScore = 0;
 //Functions//
   //Timer//
-var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
+var winPoint = function (randomColor, randomLetter, randomCard) {
   setConditionalHanders(correctColor, randomColor, randomLetter, randomCard)
   setTimeout(function() {
     unappender(correctColor, randomColor, randomLetter, randomCard);
@@ -39,7 +39,7 @@ var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
 
   //Inherent to function levels functions//
   //work on this more...//
-var setConditionalHanders = function (correctColor, randomColor, randomLetter, randomCard) {
+var setConditionalHanders = function (randomColor, randomLetter, randomCard) {
   console.log("set conditional handlers running");
   console.log(randomColor);
   $(document).keydown(function (event) {
@@ -68,28 +68,28 @@ var points = function (pointsAdded) {
   }
 }
 
-var pickRandomColor = function (correctColor) {
+var pickRandomColor = function () {
   var indexNum = Math.floor(Math.random() * colors.length);
   var randomNum = colors[indexNum];
   var randomColor = randomNum.valueOf();
   pickRandomLetter(correctColor, randomColor);
 }
 
-var pickRandomLetter = function (correctColor, randomColor) {
+var pickRandomLetter = function (randomColor) {
   var indexNum = Math.floor(Math.random() * letters.length);
   var randomNum = letters[indexNum];
   var randomLetter = randomNum.valueOf();
   pickRandomCard(correctColor, randomColor, randomLetter);
 }
 
-var pickRandomCard = function (correctColor, randomColor, randomLetter) {
+var pickRandomCard = function (randomColor, randomLetter) {
   var indexNum = Math.floor(Math.random() * cardCollection.length)
   var randomNum = cardCollection[indexNum];
   var randomCard = randomNum;
   appender(correctColor, randomColor, randomLetter, randomCard);
 }
 
-var appender = function (correctColor, randomColor, randomLetter, randomCard) {
+var appender = function (randomColor, randomLetter, randomCard) {
   console.log(correctColor, randomColor, randomLetter, randomCard)
   var text = $(randomCard).children("p");
   text.text(randomLetter);
@@ -97,7 +97,7 @@ var appender = function (correctColor, randomColor, randomLetter, randomCard) {
   winPoint(correctColor, randomColor, randomLetter, randomCard);
 }
 
-function unappender(correctColor, randomColor, randomLetter, randomCard) {
+function unappender(randomColor, randomLetter, randomCard) {
   console.log("this should be two seconds");
   time = 0;
   var text = $(randomCard).children("p");
@@ -110,11 +110,16 @@ function unappender(correctColor, randomColor, randomLetter, randomCard) {
 function levelsDefined(playerMode) {
 
   function practice(keysNum) {
-      $('#show-level').text('P');
-      console.log("More progress! " + playerMode)
-      console.log(keysNum);
-      time = 3000;
-      pickRandomColor("rgb(155, 89, 182");
+    var i = 0
+    if (i < keysNum) {
+      var repeat = setInterval (function () {
+        $('#show-level').text('P');
+        console.log("More progress! " + playerMode)
+        time = 3000;
+        pickRandomColor();
+        i++;
+      }, 3000);
+    }
   }
   function one () {
     console.log("level one passed")
