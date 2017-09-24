@@ -40,19 +40,19 @@ To use the dialog box efficiently, The goal of being able to choose a player mod
 ### Task Two: Levels Logic
 I thought it would be a good idea to have a "levels" variable and create a function/switch, that depending on what levels is defined as, to reference a function that would assign a different set a variables that would define the parameters of a level and start the level. Once I created the switch, I created a "levelsDefined" function, and with that I decided include multiple other functions inside levelsDefined. So the way it would work is that once the switch is called by the playerMode function it takes the initial global variable "levels" assign it a new value that would prepare it for the next case in the switch. I also included a lot of additonals that would check for player mode (I'll get to that later). The basics would be onece it understands what the value of levels is, it would call a function within a function. I wanted a function called levelsDefined because I thought I could add in code that would repeat the levels if there was the need for a second player. It was a bit difficult to be able to reference a function within another function due to the fact that I didn't know how to do that, and so after looking it up, realized that I had to define the functions within the levelsDefined function as properties of that function. So then when I would want to start a level. I would have to call the levelsDefined function, and then the function within that. If you look at the script.js file and read the code for the levelUp function I also passed an argument to run the function within levelsDefined. For the first case "start" it was an argument of two. That is the number I want the actions in the level to repeat themselves.
 
-###Task Three: Rounds within levels
+### Task Three: Rounds within levels
 To finish this task I needed to first implement what a round was, and to run that. In addition, depending on the level, to implement certain variables that could trigger a point in the game. I at first, like I mentioned earlier, had function specific to the level that would alter certain variables in the game differently (such as time), and then call another function that would start a string of functions to run. The first function in this string of functions was pickRandomColor(), with the argument correctColor passed on, 
 
-####pickRandomColor, pickRandomLetter, and pickRandomCard
+#### pickRandomColor, pickRandomLetter, and pickRandomCard
 Pretty self-explanatory, essentially one of the global variables I had was an array and within that array was a bunch of different strings that contained the values for certain colors in rgb(). It was through this array that I was able to select random colors. To do this, I first had to declare a variable called indexNum that is defined by a few different math functions that would pick a random integer that was between 0 and the length of the colors array. I then took that number and and attached that as the index value to the array and assigned that as a variable randomNum. So randomNum now represents the selected item in the array. I then create a new variable called randomColor and defined that as the actual value of the item in the array, which is the rgb value that I want to use to change the background color of the yet to be selected square. I then passed both the correctColor value and the the randomColor value onto the next function, which was pickRandom letter, and after that the next function was pickRandomCard. The logic for the color function is essentially the same for the rest of those functions, which was just grabbing random values from arrays. From that point on the next thing I needed to do to create a round was to create an instance where you could win, but I need to change a square first.
 
-####appender
+#### appender
 The first thing I needed to do was grab the random square (which was just a div around other divs in a class that would form a grid) and access the properties of that square to apply the state of the changed square (where you can earn a point). I created a specific function called appender that would do just that. There, I grabbed the child of the randomCard value that I had, which was one of those divs, and then I grabbed the child of that div, which was a <p>. At that point I just inserted the value of the random letter I got and then the color as well. By doing that I was creating the instance where you could win. But, as with everything in javascript, you have to declare it, so I also created a variable called winPoint.
 
-####winPoint
+#### winPoint
 winPoint was a function that just called two seperate functions at once. One setConditionalHanders and the other setTimeOut. These two functions create what defines how to what makes you get a point and for how long.
 
-#####setConditionalHandlers
+##### setConditionalHandlers
 setConditional handers was simply a function that contained an event listener to check for keys pressed on the board. I could have made this a global event listener but I felt as if I would be able to control it more if I decided to include it as it's own function and call it. In the eventListener was an anonymous callback function that would first define the background color of the square, by taking the color of the square and naming it currentColor. As with everything in the appender function, all the same arguments were passed so when I was able to grab the value of the currentColor I was able to compare that with if it also matches the randomColor. I did this by creating a conditional. If the current color is the same as the random color it would mean that the color hasn't disappeared and the keystroke is still valid for a point. Also, I did the same with the letter, event.key being 
 the given value and checked to see if matches the value for randomLetter. This was also one of the times where I realized a problem. 
 
@@ -60,24 +60,24 @@ the given value and checked to see if matches the value for randomLetter. This w
 
 Withe the game so far, if the conditional passes (which is simply now the color and letter match),  a points function is called with the argument of one to add a point to the players score. If it doesn't the points function is still run, however instead the argument is 0. In the points function, I also made it so the points display and update live.
 
-#####setTimeout
+##### setTimeout
 setTimeout was a function within the winPoint function that simply gave a delay, that delay being dependent on the time variable (which was established in the current level function). The time delay was simply delaying the call to execute another function called the appender. For instance, the practice level established the delay time as 3 seconds. So the square is displayed for 3 seconds and then the unappender function executes.
 
-####unappender
+#### unappender
 Unappender is the next step in finalizing the round and this simply takes the attributes of the selected square and undoes them back to the normal square color state without any letters displayed.
 
-####switcher
+#### switcher
 switcher is a function that is not currently being used at this point but it's intended use was to allow the two player mode to work. Due to time constaints I wasn't able to complete this functionality. I originally thought this this could be automatic and for the function to detect if two player mode was selected and if so to just reference the same function being executed, but that would be a bit difficult because I didn't have anything being defined as the current variable. 
 
 In order to finsish this I would have to assign the current level as a variable and then use the button "Switcher" on the website to act as the trigger to cause the the level to play again, and then with that I would also have to check that that function has only been run once per round.
 
-###Timing and repitition of rounds
+### Timing and repitition of rounds
 So now that I could run once instance of a round, how could I run multiple per round? That was one of the more time consuming challenges due to the fact that I had to look it up.
 If you look closely in the functions defining each level you see I assigned a setInterval function, this function would would cycle through the function and repeat it at the same rate as the the length the squares would display. Now I manually entered the numbers in at this point but in hindsight I could've used the time variable as well. 
 
 In the levelUp function when I called any level function I also included an arugment that was a number, which is the number of rounds that are two be played. With that number passed on I was able to control the number of rounds to be played each time using the parameter that argument went in, which was keysNum. I also set a variable called i outside of the setInterval function. So every time a round would go, it would add one too i and if i matched the number of keysNum then it would clear the interval.
 
-##Overall Review
+## Overall Review
 This is definitely still a work in progress, and isnt' what I exactly want the game to be, but for what it is I'm still impressed an happy that I was able to put it together all by myself. I will continuet to add in more features like
 
 * Adding more levels
