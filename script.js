@@ -29,7 +29,7 @@ var playerTwoScore = 0;
 //Functions//
   //Timer//
 var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
-  setConditionalHanders(correctColor, randomColor, randomLetter, randomCard)
+  setConditionalHandlers(correctColor, randomColor, randomLetter, randomCard)
   setTimeout(function() {
     unappender(correctColor, randomColor, randomLetter, randomCard);
   }, time); 
@@ -38,13 +38,13 @@ var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
 
   //Inherent to function levels functions//
   //work on this more...//
-var setConditionalHanders = function (correctColor, randomColor, randomLetter, randomCard) {
+var setConditionalHandlers = function (correctColor, randomColor, randomLetter, randomCard) {
   $(document).keydown(function (event) {
     var currentColor = $(randomCard).css('backgroundColor');
     if (currentColor === randomColor && event.key === randomLetter){
         points(1);
     } else {
-        points(0)
+        points(0);
     }
   })
 }
