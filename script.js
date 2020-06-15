@@ -24,6 +24,7 @@ var turn = true
 var level = "start";
 var time;
 var currentColor;
+var earnedPoint = false;
 var playerOneScore = 0;
 var playerTwoScore = 0;
 //Functions//
@@ -41,7 +42,8 @@ var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
 var setConditionalHandlers = function (correctColor, randomColor, randomLetter, randomCard) {
   $(document).keydown(function (event) {
     var currentColor = $(randomCard).css('backgroundColor');
-    if (currentColor === randomColor && event.key === randomLetter){
+    if (currentColor === randomColor && event.key === randomLetter  && !earnedPoint){
+        earnedPoint = true;
         points(1);
     } else {
         points(0);
@@ -97,6 +99,7 @@ function unappender(correctColor, randomColor, randomLetter, randomCard) {
   var text = $(randomCard).children("p");
   text.text(' ');
   $(randomCard).css('backgroundColor', 'blue');
+  earnedPoint = false;
 }
 
 var switcher = function () {
