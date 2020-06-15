@@ -20,11 +20,12 @@ $(cardAccess).each(function(i) {
 })
   //Global JS variables//
 var numPlayers;
-var turn = true
+var turn = true;
 var level = "start";
 var time;
 var currentColor;
 var earnedPoint = false;
+var isRoundActive = false;
 var playerOneScore = 0;
 var playerTwoScore = 0;
 //Functions//
@@ -42,7 +43,7 @@ var winPoint = function (correctColor, randomColor, randomLetter, randomCard) {
 var setConditionalHandlers = function (correctColor, randomColor, randomLetter, randomCard) {
   $(document).keydown(function (event) {
     var currentColor = $(randomCard).css('backgroundColor');
-    if (currentColor === randomColor && event.key === randomLetter  && !earnedPoint){
+    if (currentColor === randomColor && event.key.toUpperCase() === randomLetter  && !earnedPoint){
         earnedPoint = true;
         points(1);
     } else {
@@ -128,6 +129,10 @@ function levelsDefined() {
     var repeat = setInterval (function () {
       $('#show-level').text('P');
       time = 3000;
+      isRoundActive = true;
+      setTimeout(function endRound() {
+        isRoundActive = false;
+      }, keysNum * time)
       pickRandomColor("rgb(155, 89, 182");
       i++;
       if (i === keysNum) {
@@ -141,6 +146,10 @@ function levelsDefined() {
     var repeat = setInterval (function () {
       $('#show-level').text('1');
       time = 2000;
+      isRoundActive = true;
+      setTimeout(function endRound() {
+        isRoundActive = false;
+      }, keysNum * time);
       pickRandomColor("rgb(155, 89, 182");
       i++;
       if (i === keysNum) {
@@ -155,6 +164,10 @@ function levelsDefined() {
     var repeat = setInterval (function () {
       $('#show-level').text('2');
       time = 1000;
+      isRoundActive = true;
+      setTimeout(function endRound() {
+        isRoundActive = false;
+      }, keysNum * time)
       pickRandomColor("rgb(155, 89, 182");
       i++;
       if (i === keysNum) {
@@ -167,6 +180,10 @@ function levelsDefined() {
     var repeat = setInterval (function () {
       $('#show-level').text('3');
       time = 850;
+      isRoundActive = true;
+      setTimeout(function endRound() {
+        isRoundActive = false;
+      }, keysNum * time)
       pickRandomColor("rgb(155, 89, 182");
       i++;
       if (i === keysNum) {
@@ -274,33 +291,38 @@ $("#mode-select").click(function () {
   var grabChoice = $('input[name=question1]:checked', '#numPlayers').val();
   if (grabChoice === "1") {
     playerMode(1)
-    } else if (grabChoice === "2") {
+    } 
+  else if (grabChoice === "2") {
     playerMode(2);
-    } else {
+    } 
+  else {
       alert("You must choose a mode.");
-    }
+  }
 });
 
- $( function introduction() {
-    $( "#dialog" ).dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 1000
-      },
-      hide: {
-        effect: "explode",
-        duration: 1000
-      }
-    });
+$(function introduction() {
+  $( "#dialog" ).dialog({
+    autoOpen: true,
+    show: {
+      effect: "blind",
+      duration: 1000
+    },
+    hide: {
+      effect: "explode",
+      duration: 1000
+    }
+  });
  
-    $( "#opener" ).on( "click", function() {
-      $( "#dialog" ).dialog( "open" );
-    });
-  } );
+  $( "#opener" ).on( "click", function() {
+    $( "#dialog" ).dialog( "open" );
+  });
+});
  
- $('#leveler').on('click', function () {
-  levelUp();
+$('#leveler').on('click', function () {
+  if (!isRoundActive) {
+    isRoundActive = true;
+    levelUp();
+  }
  })
 
  $('#switch').on('click', function () {
